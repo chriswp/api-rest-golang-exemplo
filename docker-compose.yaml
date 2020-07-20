@@ -1,0 +1,32 @@
+version: '3'
+services:
+  app:
+    build: .
+    container_name: app_goapi
+    volumes:
+      - '.:/go/src'
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+  db:
+    image: 'postgres:12.1'
+    container_name: db_goapi
+    restart: unless-stopped
+    tty: true
+    ports:
+      - '15432:5432'
+    environment:
+      POSTGRES_DB: goapi
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - './.docker/db:/var/lib/postgresql/data'
+      - './.docker/postgres:/docker-entrypoint-initdb.d'
+    networks:
+      - app-network
+
+  networks:
+    app-network:
+      driver: bridge
