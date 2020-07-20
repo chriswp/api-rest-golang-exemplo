@@ -57,7 +57,7 @@ func (d *Database) Connect() (*gorm.DB, error) {
 		d.Db.LogMode(true)
 	}
 
-	if d.Debug {
+	if d.AutoMigrateDb {
 		d.Db.AutoMigrate(&domain.Categoria{}, &domain.Produto{})
 		d.Db.Model(domain.Produto{}).AddForeignKey("categoria_id", "categorias (id)", "CASCADE", "CASCADE")
 	}
