@@ -7,22 +7,23 @@ import (
 )
 
 type Venda struct {
-	ID              string    `json:"id" gorm:"type:uuid;primary_key"`
-	DataVenda       time.Time `json:"data_venda" valid:"notnull"`
-	Cliente         Cliente   `valid:"notnull"`
-	ClienteID       string
-	VendaItem       []*VendaItem `json:"venda_item"`
-	Total           float64
-	Subtotal        float64
-	Observacao      string
-	DataCriacao     time.Time `json:"data_criacao" valid:"-"`
-	DataModificacao time.Time `json:"data_modificacao" valid:"-"`
+	ID              string       `json:"id" valid:"uuid" gorm:"type:uuid;primary_key"`
+	DataVenda       time.Time    `json:"data_venda" valid:"-"`
+	Cliente         *Cliente     `json:"cliente" valid:"required"`
+	ClienteID       string       `valid:"-"`
+	VendaItem       []*VendaItem `json:"venda_item" valid:"-"`
+	Total           float64      `valid:"-"`
+	Subtotal        float64      `valid:"-"`
+	Observacao      string       `valid:"type(string),optional"`
+	DataCriacao     time.Time    `json:"data_criacao" valid:"-"`
+	DataModificacao time.Time    `json:"data_modificacao" valid:"-"`
 }
 
-func NewVenda(cliente Cliente, itens []*VendaItem) (*Venda, error) {
+func NewVenda(cliente *Cliente, dataVenda time.Time, observacao string) (*Venda, error) {
 	venda := Venda{
-		Cliente:   cliente,
-		VendaItem: itens,
+		Cliente:    cliente,
+		DataVenda:  dataVenda,
+		Observacao: observacao,
 	}
 	venda.prepare()
 	err := venda.Validate()

@@ -6,17 +6,17 @@ import (
 )
 
 type VendaItem struct {
-	ID              string    `json:"id" valid:"notnull" gorm:"type:uuid;primary_key"`
-	Produto         Produto   `json:"produto" valid:"notnull"`
+	ID              string    `json:"id" valid:"uuid" gorm:"type:uuid;primary_key"`
+	Produto         *Produto  `json:"produto" valid:"required"`
 	ProdutoID       string    `json:"-"`
-	Venda           Venda     `json:"venda" valid:"notnull"`
-	VendaID         Venda     `json:"-"`
-	Quantidade      int8      `valid:"notnull"`
+	Venda           *Venda    `json:"venda" valid:"required"`
+	VendaID         string    `json:"-"`
+	Quantidade      int       `valid:"notnull"`
 	DataCriacao     time.Time `json:"data_criacao" valid:"-"`
 	DataModificacao time.Time `json:"data_modificacao" valid:"-"`
 }
 
-func NewVendaItem(venda Venda, produto Produto, quantidade int8) (*VendaItem, error) {
+func NewVendaItem(venda *Venda, produto *Produto, quantidade int) (*VendaItem, error) {
 	vendaItem := VendaItem{
 		Produto:    produto,
 		Venda:      venda,

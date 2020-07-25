@@ -14,6 +14,10 @@ type Compra struct {
 	DataModificacao time.Time `json:"data_modificacao" valid:"-"`
 }
 
+func init() {
+	govalidator.SetFieldsRequiredByDefault(true)
+}
+
 func NewCompra(dataCompra time.Time) (*Compra, error) {
 	compra := Compra{
 		DataCompra: dataCompra,

@@ -16,6 +16,10 @@ type Cliente struct {
 	DataModificacao time.Time `json:"data_modificacao" valid:"-"`
 }
 
+func init() {
+	govalidator.SetFieldsRequiredByDefault(true)
+}
+
 func NewCliente(nome string, cpf string, email string) (*Cliente, error) {
 	cliente := Cliente{
 		Nome:  nome,
