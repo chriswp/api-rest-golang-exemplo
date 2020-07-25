@@ -6,20 +6,25 @@ import (
 	"api/repositories"
 	"github.com/stretchr/testify/require"
 	"testing"
+	"time"
 )
 
-func TestProdutoRepositoryDbInsert(t *testing.T) {
+func TestCompraItemRepositoryDbInsert(t *testing.T) {
 	db := database.NewDbTest()
 	defer db.Close()
 
+	compra, _ := domain.NewCompra(time.Now())
+
 	categoria, _ := domain.NewCategoria("categoria teste")
 	produto, err := domain.NewProduto(categoria, "produto", 10.50, "apenas para teste")
-	repo := repositories.NewProdutoRepository(db)
-	repo.Insert(produto)
 
-	c, err := repo.Find(produto.ID)
+	item, _ := domain.NewCompraItem(compra, produto, 2)
+	repo := repositories.NewCompraItemRepository(db)
+	repo.Insert(item)
+
+	c, err := repo.Find(item.ID)
 
 	require.NotEmpty(t, c.ID)
 	require.Nil(t, err)
-	require.Equal(t, c.ID, produto.ID)
+	require.Equal(t, c.ID, item.ID)
 }

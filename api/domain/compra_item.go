@@ -7,25 +7,25 @@ import (
 )
 
 type CompraItem struct {
-	ID              string     `json:"id" valid:"uuid" gorm:"type:uuid;primary_key"`
-	Compra          *Compra    `json:"compra" valid:"required" gorm:"foreignkey:CompraID"`
-	CompraID        string     `json:"-" valid:"-" gorm:"column:compra_id;type:uuid;notnull"`
-	Produtos        []*Produto `json:"produto" valid:"required" gorm:"foreignkey:ProdutoID"`
-	ProdutoID       string     `json:"-" valid:"-" gorm:"column:produto_id;type:uuid;notnull"`
-	Quantidade      int        `valid:"-"`
-	Ativo           bool       `valid:"-"`
-	DataCriacao     time.Time  `json:"data_criacao" valid:"-"`
-	DataModificacao time.Time  `json:"data_modificacao" valid:"-"`
+	ID              string    `json:"id" valid:"uuid" gorm:"type:uuid;primary_key"`
+	Compra          *Compra   `json:"compra" valid:"required" gorm:"foreignkey:CompraID"`
+	CompraID        string    `json:"-" valid:"-" gorm:"column:compra_id;type:uuid;notnull"`
+	Produto         *Produto  `json:"produto" valid:"required" gorm:"foreignkey:ProdutoID"`
+	ProdutoID       string    `json:"-" valid:"-" gorm:"column:produto_id;type:uuid;notnull"`
+	Quantidade      int       `valid:"-"`
+	Ativo           bool      `valid:"-"`
+	DataCriacao     time.Time `json:"data_criacao" valid:"-"`
+	DataModificacao time.Time `json:"data_modificacao" valid:"-"`
 }
 
 func init() {
 	govalidator.SetFieldsRequiredByDefault(true)
 }
 
-func NewCompraItem(compra *Compra, produtos []*Produto, quantidade int) (*CompraItem, error) {
+func NewCompraItem(compra *Compra, produto *Produto, quantidade int) (*CompraItem, error) {
 	itens := CompraItem{
 		Compra:     compra,
-		Produtos:   produtos,
+		Produto:    produto,
 		Quantidade: quantidade,
 	}
 	itens.prepare()
