@@ -7,20 +7,22 @@ import (
 )
 
 type Categoria struct {
-	ID              string     `json:"id" valid:"notnull" gorm:"type:uuid;primary_key"`
-	Nome            string     `json:"nome"`
-	Ativo           bool       `json:"ativo" valid:"notnull"`
+	ID              string     `json:"id" valid:"uuid" gorm:"type:uuid;primary_key"`
+	Nome            string     `json:"nome" valid:"notnull" gorm:"type:varchar(40);notnull"`
+	Ativo           bool       `json:"ativo" valid:"-"`
 	DataCriacao     time.Time  `json:"data_criacao" valid:"-"`
 	DataModificacao time.Time  `json:"data_modificacao" valid:"-"`
-	Produto         []*Produto `json:"produto" gorm:"ForeignKey:CategoriaID"`
+	Produtos        []*Produto `json:"produtos" valid:"-" gorm:"ForeignKey:CategoriaID"`
 }
 
 func init() {
 	govalidator.SetFieldsRequiredByDefault(true)
 }
 
-func NewCategoria() (*Categoria, error) {
-	categoria := Categoria{}
+func NewCategoria(nome string) (*Categoria, error) {
+	categoria := Categoria{
+		Nome: nome,
+	}
 	categoria.prepare()
 
 	err := categoria.Validate()

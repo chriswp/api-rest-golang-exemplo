@@ -7,16 +7,21 @@ import (
 )
 
 type Cliente struct {
-	ID              string `json:"id" valid:"notnull" gorm:"type:uuid;primary_key"`
-	CPF             string
-	email           string
-	Vendas          []*Venda  `json:"vendas" gorm:"ForeignKey:ClienteID"`
+	ID              string    `json:"id" valid:"uuid" gorm:"type:uuid;primary_key"`
+	Nome            string    `json:"nome" valid:"notnull"`
+	CPF             string    `json:"cpf" valid:"notnull" gorm:"type:varchar(14);unique_index"`
+	Email           string    `json:"email" valid:"email" gorm:"type:varchar(100);unique_index"`
+	Vendas          []*Venda  `json:"vendas" valid:"-" gorm:"ForeignKey:ClienteID"`
 	DataCriacao     time.Time `json:"data_criacao" valid:"-"`
 	DataModificacao time.Time `json:"data_modificacao" valid:"-"`
 }
 
-func NewCliente() (*Cliente, error) {
-	cliente := Cliente{}
+func NewCliente(nome string, cpf string, email string) (*Cliente, error) {
+	cliente := Cliente{
+		Nome:  nome,
+		CPF:   cpf,
+		Email: email,
+	}
 	cliente.prepare()
 	err := cliente.Validate()
 

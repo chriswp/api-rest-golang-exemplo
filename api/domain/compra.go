@@ -7,9 +7,9 @@ import (
 )
 
 type Compra struct {
-	ID              string    `json:"id" valid:"notnull" gorm:"type:uuid;primary_key"`
-	DataCompra      time.Time `valid:"notnull"`
-	Observacao      string
+	ID              string    `json:"id" valid:"uuid" gorm:"type:uuid;primary_key;not null"`
+	DataCompra      time.Time `valid:"required" gorm:"type:date"`
+	Observacao      string    `valid:"type(string),optional "gorm:"type:text"`
 	DataCriacao     time.Time `json:"data_criacao" valid:"-"`
 	DataModificacao time.Time `json:"data_modificacao" valid:"-"`
 }

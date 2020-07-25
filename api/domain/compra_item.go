@@ -8,16 +8,16 @@ import (
 
 type CompraItem struct {
 	ID              string     `json:"id" valid:"notnull" gorm:"type:uuid;primary_key"`
-	Compra          Compra     `json:"compra" valid:"notnull"`
-	CompraID        string     `json:"-"`
-	Produtos        []*Produto `json:"produto" valid:"notnull"`
-	ProdutoID       string     `json:"-"`
-	Quantidade      int8       `valid:"notnull"`
+	Compra          Compra     `json:"compra" valid:"notnull" gorm:"foreignkey:CompraID"`
+	CompraID        string     `json:"-" gorm:"column:compra_id;type:uuid;notnull"`
+	Produtos        []*Produto `json:"produto" valid:"notnull" gorm:"foreignkey:ProdutoID"`
+	ProdutoID       string     `json:"-" gorm:"column:produto_id;type:uuid;notnull"`
+	Quantidade      int        `valid:"notnull"`
 	DataCriacao     time.Time  `json:"data_criacao" valid:"-"`
 	DataModificacao time.Time  `json:"data_modificacao" valid:"-"`
 }
 
-func NewCompraItem(compra Compra, produtos []*Produto, quantidade int8) (*CompraItem, error) {
+func NewCompraItem(compra Compra, produtos []*Produto, quantidade int) (*CompraItem, error) {
 	itens := CompraItem{
 		Compra:     compra,
 		Produtos:   produtos,
