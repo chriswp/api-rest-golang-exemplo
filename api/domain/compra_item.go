@@ -18,6 +18,10 @@ type CompraItem struct {
 	DataModificacao time.Time `json:"data_modificacao" valid:"-"`
 }
 
+func (CompraItem) TableName() string {
+	return "compra_itens"
+}
+
 func init() {
 	govalidator.SetFieldsRequiredByDefault(true)
 }

@@ -11,7 +11,7 @@ type Venda struct {
 	DataVenda       time.Time    `json:"data_venda" valid:"-"`
 	Cliente         *Cliente     `json:"cliente" valid:"required"`
 	ClienteID       string       `valid:"-"`
-	VendaItem       []*VendaItem `json:"venda_item" valid:"-"`
+	Itens           []*VendaItem `json:"venda_item" valid:"-"`
 	Total           float64      `valid:"-"`
 	Subtotal        float64      `valid:"-"`
 	Observacao      string       `valid:"type(string),optional"`

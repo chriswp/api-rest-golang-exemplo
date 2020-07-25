@@ -59,10 +59,14 @@ func (d *Database) Connect() (*gorm.DB, error) {
 
 	if d.AutoMigrateDb {
 		d.Db.AutoMigrate(&domain.Categoria{}, &domain.Produto{}, &domain.ProdutoDigital{}, &domain.Cliente{}, &domain.Compra{}, &domain.CompraItem{})
-		d.Db.Model(domain.Produto{}).AddForeignKey("categoria_id", "categorias (id)", "NO ACTION", "NO ACTION")
-		d.Db.Model(domain.CompraItem{}).AddForeignKey("compra_id", "compras (id)", "NO ACTION", "NO ACTION")
-		d.Db.Model(domain.CompraItem{}).AddForeignKey("produto_id", "produtos (id)", "NO ACTION", "NO ACTION")
-		d.Db.Model(domain.ProdutoDigital{}).AddForeignKey("produto_id", "produtos (id)", "NO ACTION", "NO ACTION")
+		d.Db.AutoMigrate(&domain.Venda{}, &domain.VendaItem{})
+		d.Db.Model(domain.Produto{}).AddForeignKey("categoria_id", "categorias(id)", "NO ACTION", "NO ACTION")
+		d.Db.Model(domain.CompraItem{}).AddForeignKey("compra_id", "compras(id)", "NO ACTION", "NO ACTION")
+		d.Db.Model(domain.CompraItem{}).AddForeignKey("produto_id", "produtos(id)", "NO ACTION", "NO ACTION")
+		d.Db.Model(domain.ProdutoDigital{}).AddForeignKey("produto_id", "produtos(id)", "NO ACTION", "NO ACTION")
+		d.Db.Model(domain.Venda{}).AddForeignKey("cliente_id", "clientes(id)", "NO ACTION", "NO ACTION")
+		d.Db.Model(domain.VendaItem{}).AddForeignKey("produto_id", "produtos(id)", "NO ACTION", "NO ACTION")
+		d.Db.Model(domain.VendaItem{}).AddForeignKey("venda_id", "vendas(id)", "NO ACTION", "NO ACTION")
 	}
 
 	return d.Db, nil

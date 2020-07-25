@@ -16,5 +16,6 @@ func TestNewVendaItem(t *testing.T) {
 
 	vendaItem, err := domain.NewVendaItem(venda, produto, 10)
 	require.NotNil(t, vendaItem)
+	require.NotNil(t, vendaItem.ID)
 	require.Nil(t, err)
 }
