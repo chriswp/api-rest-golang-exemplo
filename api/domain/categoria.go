@@ -7,10 +7,12 @@ import (
 )
 
 type Categoria struct {
-	ID          string    `json:"id"  gorm:"type:uuid;primary_key"`
-	Nome        string    `json:"nome" valid:"notnull"`
-	DataCriacao time.Time `json:"data_criacao" valid:"-"`
-	Ativo       bool      `json:"ativo" valid:"notnull"`
+	ID              string     `json:"id" valid:"notnull" gorm:"type:uuid;primary_key"`
+	Nome            string     `json:"nome"`
+	Ativo           bool       `json:"ativo" valid:"notnull"`
+	DataCriacao     time.Time  `json:"data_criacao" valid:"-"`
+	DataModificacao time.Time  `json:"data_modificacao" valid:"-"`
+	Produto         []*Produto `json:"produto" gorm:"ForeignKey:CategoriaID"`
 }
 
 func init() {
@@ -33,6 +35,7 @@ func NewCategoria() (*Categoria, error) {
 func (categoria *Categoria) prepare() {
 	categoria.ID = uuid.NewV4().String()
 	categoria.DataCriacao = time.Now()
+	categoria.DataModificacao = time.Now()
 	categoria.Ativo = true
 }
 
