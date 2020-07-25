@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"fmt"
 	"github.com/asaskevich/govalidator"
 	uuid "github.com/satori/go.uuid"
 	"time"
@@ -43,7 +42,6 @@ func NewProduto(categoria *Categoria, nome string, preco float64, descricao stri
 
 func (produto Produto) Validate() error {
 	_, err := govalidator.ValidateStruct(produto)
-	fmt.Printf("erro: %v", err)
 	return err
 }
 
