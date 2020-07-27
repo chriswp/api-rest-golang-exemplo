@@ -27,19 +27,19 @@ func init() {
 }
 
 func NewCompraItem(compra *Compra, produto *Produto, quantidade int) (*CompraItem, error) {
-	itens := CompraItem{
+	item := CompraItem{
 		Compra:     compra,
 		Produto:    produto,
 		Quantidade: quantidade,
 	}
-	itens.prepare()
-	err := itens.Validate()
+	item.prepare()
+	err := item.Validate()
 
 	if err != nil {
 		return nil, err
 	}
 
-	return &itens, nil
+	return &item, nil
 }
 
 func (ci *CompraItem) prepare() {

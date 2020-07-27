@@ -30,7 +30,7 @@ func (repo CompraRepositoryDb) Insert(compra *domain.Compra) (*domain.Compra, er
 
 func (repo CompraRepositoryDb) Find(id string) (*domain.Compra, error) {
 	var compra domain.Compra
-	repo.Db.First(&compra, "id = ?", id)
+	repo.Db.Preload("Itens").First(&compra, "id = ?", id)
 
 	if compra.ID == "" {
 		return nil, fmt.Errorf("compra inexistente")
