@@ -1,7 +1,6 @@
 package main
 
-import log "github.com/sirupsen/logrus"
-
-func main()  {
-	log.Info("algo aconteceu")
+func main() {
+	a := App{}
+	a.Run("8001")
 }

@@ -16,8 +16,9 @@ func TestCompraRepositoryDbInsert(t *testing.T) {
 	compra, _ := domain.NewCompra(time.Now())
 	categoria, _ := domain.NewCategoria("categoria 1")
 	produto, _ := domain.NewProduto(categoria, "produto 1", 100.00, "apenas para efeito de teste")
+	produto2, _ := domain.NewProduto(categoria, "produto 2", 100.00, "apenas para efeito de teste")
 	compra.AddNewItem(produto, 2)
-	compra.AddNewItem(produto, 1)
+	compra.AddNewItem(produto2, 1)
 
 	repo := repositories.NewCompraRepository(db)
 	repo.Insert(compra)

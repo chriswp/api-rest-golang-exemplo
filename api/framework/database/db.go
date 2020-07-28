@@ -6,6 +6,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	_ "github.com/lib/pq"
 	"log"
+	"os"
 )
 
 type Database struct {
@@ -21,6 +22,11 @@ type Database struct {
 
 func NewDb() *Database {
 	return &Database{}
+}
+
+func DbConnect() *gorm.DB {
+	dbInstace := NewDb()
+
 }
 
 func NewDbTest() *gorm.DB {

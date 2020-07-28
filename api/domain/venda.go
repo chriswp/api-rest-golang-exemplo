@@ -7,16 +7,16 @@ import (
 )
 
 type Venda struct {
-	ID              string       `json:"id" valid:"uuid" gorm:"type:uuid;primary_key"`
-	DataVenda       time.Time    `json:"data_venda" valid:"-"`
-	Cliente         *Cliente     `json:"cliente" valid:"required"`
-	ClienteID       string       `valid:"-"`
-	Itens           []*VendaItem `json:"venda_item" valid:"-"`
-	Total           float64      `valid:"-"`
-	Subtotal        float64      `valid:"-"`
-	Observacao      string       `valid:"type(string),optional"`
-	DataCriacao     time.Time    `json:"data_criacao" valid:"-"`
-	DataModificacao time.Time    `json:"data_modificacao" valid:"-"`
+	ID              string      `json:"id" valid:"uuid" gorm:"type:uuid;primary_key"`
+	DataVenda       time.Time   `json:"data_venda" valid:"-"`
+	Cliente         *Cliente    `json:"cliente" valid:"required"`
+	ClienteID       string      `valid:"-"`
+	Itens           []VendaItem `json:"venda_item" valid:"-"`
+	Total           float64     `valid:"-"`
+	Subtotal        float64     `valid:"-"`
+	Observacao      string      `valid:"type(string),optional"`
+	DataCriacao     time.Time   `json:"data_criacao" valid:"-"`
+	DataModificacao time.Time   `json:"data_modificacao" valid:"-"`
 }
 
 func NewVenda(cliente *Cliente, dataVenda time.Time, observacao string) (*Venda, error) {
@@ -33,6 +33,11 @@ func NewVenda(cliente *Cliente, dataVenda time.Time, observacao string) (*Venda,
 	}
 
 	return &venda, nil
+}
+
+func (venda *Venda) AddNewItem(produto *Produto, quantidade int) {
+	item := VendaItem{Produto: produto, Quantidade: quantidade}
+	venda.Itens = append(venda.Itens, item)
 }
 
 func (v *Venda) prepare() {
