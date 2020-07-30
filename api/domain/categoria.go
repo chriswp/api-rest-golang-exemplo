@@ -1,9 +1,7 @@
 package domain
 
 import (
-	"api/repositories"
 	"github.com/asaskevich/govalidator"
-	"github.com/jinzhu/gorm"
 	uuid "github.com/satori/go.uuid"
 	"time"
 )
@@ -46,25 +44,4 @@ func (categoria *Categoria) prepare() {
 func (categoria Categoria) Validate() error {
 	_, err := govalidator.ValidateStruct(categoria)
 	return err
-}
-
-func (categoria *Categoria) All() {
-
-}
-
-func (categoria *Categoria) Show() {
-
-}
-
-func (categoria *Categoria) Create() {
-
-}
-
-func (categoria *Categoria) Update() {
-
-}
-
-func (categoria *Categoria) Delete(db *gorm.DB) {
-	repo := repositories.NewCategoriaRepository(db)
-	repo.Insert(categoria)
 }

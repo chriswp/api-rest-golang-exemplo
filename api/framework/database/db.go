@@ -21,12 +21,13 @@ type Database struct {
 }
 
 func NewDb() *Database {
-	return &Database{}
-}
-
-func DbConnect() *gorm.DB {
-	dbInstace := NewDb()
-
+	return &Database{
+		Dsn:           os.Getenv("DSN"),
+		DbType:        os.Getenv("DB_TYPE"),
+		Debug:         false,
+		AutoMigrateDb: true,
+		Env:           os.Getenv("ENV"),
+	}
 }
 
 func NewDbTest() *gorm.DB {

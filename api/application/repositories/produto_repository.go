@@ -9,17 +9,18 @@ import (
 type ProdutoRepository interface {
 	Insert(produto *domain.Produto) (*domain.Produto, error)
 	Find(id string) (*domain.Produto, error)
+	All() ([]*domain.Produto, error)
 }
 
-type ProdutoRepostioryDb struct {
+type produtoRepostiory struct {
 	Db *gorm.DB
 }
 
-func NewProdutoRepository(db *gorm.DB) *ProdutoRepostioryDb {
-	return &ProdutoRepostioryDb{Db: db}
+func NewProdutoRepository(db *gorm.DB) ProdutoRepository {
+	return &produtoRepostiory{Db: db}
 }
 
-func (repo ProdutoRepostioryDb) Insert(produto *domain.Produto) (*domain.Produto, error) {
+func (repo produtoRepostiory) Insert(produto *domain.Produto) (*domain.Produto, error) {
 	err := repo.Db.Create(produto).Error
 	if err != nil {
 		return nil, err
@@ -28,7 +29,7 @@ func (repo ProdutoRepostioryDb) Insert(produto *domain.Produto) (*domain.Produto
 	return produto, nil
 }
 
-func (repo ProdutoRepostioryDb) Find(id string) (*domain.Produto, error) {
+func (repo produtoRepostiory) Find(id string) (*domain.Produto, error) {
 	var produto domain.Produto
 	repo.Db.Preload("ProdutoDigital").First(&produto, "id = ?", id)
 
@@ -37,4 +38,15 @@ func (repo ProdutoRepostioryDb) Find(id string) (*domain.Produto, error) {
 	}
 
 	return &produto, nil
+}
+
+func (repo produtoRepostiory) All() ([]*domain.Produto, error) {
+	var produtos []*domain.Produto
+	err := repo.Db.Find(&produtos).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return produtos, nil
 }

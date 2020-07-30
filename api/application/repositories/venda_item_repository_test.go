@@ -1,9 +1,9 @@
 package repositories_test
 
 import (
+	"api/application/repositories"
 	"api/domain"
 	"api/framework/database"
-	"api/repositories"
 	"fmt"
 	"github.com/stretchr/testify/require"
 	"testing"
