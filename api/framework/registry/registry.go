@@ -1,8 +1,8 @@
 package registry
 
 import (
+	"api/application/controllers"
 	"github.com/jinzhu/gorm"
-	"github.com/manakuro/golang-clean-architecture/interface/controller"
 )
 
 type registry struct {
@@ -10,13 +10,13 @@ type registry struct {
 }
 
 type Registry interface {
-	NewAppController() controller.AppController
+	NewAppController() controllers.AppController
 }
 
 func NewRegistry(db *gorm.DB) Registry {
 	return &registry{db}
 }
 
-func (r *registry) NewAppController() controller.AppController {
-	return r.NewAppController()
+func (r *registry) NewAppController() controllers.AppController {
+	return r.NewCategoriaController()
 }

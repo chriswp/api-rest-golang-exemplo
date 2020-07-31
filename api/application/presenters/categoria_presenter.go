@@ -1,4 +1,4 @@
-package presenter
+package presenters
 
 import "api/domain"
 

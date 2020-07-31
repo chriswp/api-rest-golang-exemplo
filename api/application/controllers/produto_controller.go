@@ -25,3 +25,12 @@ func (controller *produtoController) All(c Context) error {
 
 	return c.JSON(http.StatusOK, res)
 }
+
+func (controller *produtoController) Show(c Context) error {
+	res, err := controller.service.GetAll()
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, res)
+}

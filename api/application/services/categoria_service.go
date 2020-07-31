@@ -1,7 +1,7 @@
 package services
 
 import (
-	"api/application/presenter"
+	"api/application/presenters"
 	"api/application/repositories"
 	"api/domain"
 )
@@ -12,10 +12,10 @@ type CategoriaService interface {
 
 type categoriaService struct {
 	Repository repositories.CategoriaRepository
-	Presenter  presenter.CategoriaPresenter
+	Presenter  presenters.CategoriaPresenter
 }
 
-func NewCategoriaService(r repositories.CategoriaRepository, p presenter.CategoriaPresenter) *categoriaService {
+func NewCategoriaService(r repositories.CategoriaRepository, p presenters.CategoriaPresenter) *categoriaService {
 	return &categoriaService{r, p}
 }
 

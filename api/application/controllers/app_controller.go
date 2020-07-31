@@ -1,5 +1,5 @@
 package controllers
 
 type AppController interface {
-	CategoriaController
+	All(c Context) error
 }

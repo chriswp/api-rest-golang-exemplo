@@ -1,7 +1,7 @@
 package services
 
 import (
-	"api/application/presenter"
+	"api/application/presenters"
 	"api/application/repositories"
 	"api/domain"
 )
@@ -12,10 +12,10 @@ type ProdutoService interface {
 
 type produtoService struct {
 	Repository repositories.ProdutoRepository
-	Presenter  presenter.ProdutoPresenter
+	Presenter  presenters.ProdutoPresenter
 }
 
-func NewProdutoService(r repositories.ProdutoRepository, p presenter.ProdutoPresenter) ProdutoService {
+func NewProdutoService(r repositories.ProdutoRepository, p presenters.ProdutoPresenter) ProdutoService {
 	return &produtoService{r, p}
 }
 

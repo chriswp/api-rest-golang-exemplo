@@ -2,15 +2,13 @@ package main
 
 import (
 	"api/framework/database"
-	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 	"log"
 	"os"
 )
 
 type App struct {
-	Router *mux.Router
-	DB     *gorm.DB
+	DB *gorm.DB
 }
 
 func (a *App) Initialize() {
@@ -28,7 +26,4 @@ func (a *App) Initialize() {
 	}
 
 	a.DB = connection
-	a.Router = mux.NewRouter()
 }
-
-func (a *App) Run(addr string) {}
