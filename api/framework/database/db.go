@@ -6,7 +6,6 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	_ "github.com/lib/pq"
 	"log"
-	"os"
 )
 
 type Database struct {
@@ -20,18 +19,28 @@ type Database struct {
 	Env           string
 }
 
-func NewDb() *Database {
-	return &Database{
-		Dsn:           os.Getenv("DSN"),
-		DbType:        os.Getenv("DB_TYPE"),
-		Debug:         false,
-		AutoMigrateDb: true,
-		Env:           os.Getenv("ENV"),
+func NewDatabase() *Database {
+	return &Database{}
+}
+
+func NewDb() *gorm.DB {
+	dbInstance := NewDatabase()
+	dbInstance.Dsn = "dbname=apigo sslmode=disable user=root password=root host=db_goapi"
+	dbInstance.DbType = "postgres"
+	dbInstance.Debug = false
+	dbInstance.AutoMigrateDb = false
+	dbInstance.Env = "dev"
+
+	connection, err := dbInstance.Connect()
+	if err != nil {
+		log.Fatalf("Erro ao conectar ao banco de dados. %v", err)
 	}
+
+	return connection
 }
 
 func NewDbTest() *gorm.DB {
-	dbInstace := NewDb()
+	dbInstace := NewDatabase()
 	dbInstace.Env = "test"
 	dbInstace.DbTypeTest = "sqlite3"
 	dbInstace.DsnTest = ":memory:"
@@ -41,7 +50,7 @@ func NewDbTest() *gorm.DB {
 	connection, err := dbInstace.Connect()
 
 	if err != nil {
-		log.Fatalf("Test db erro %v", err)
+		log.Fatalf("Erro ao conectar ao banco de dados de teste. %v", err)
 	}
 
 	return connection

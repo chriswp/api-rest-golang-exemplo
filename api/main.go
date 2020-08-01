@@ -1,6 +1,7 @@
 package main
 
 import (
+	"api/framework/config"
 	"api/framework/registry"
 	"api/framework/router"
 	"fmt"
@@ -9,10 +10,10 @@ import (
 )
 
 func main() {
-	a := App{}
-	a.Initialize()
+	app := config.App{}
+	app.Initialize()
 
-	r := registry.NewRegistry(a.DB)
+	r := registry.NewRegistry(app.DB)
 
 	e := echo.New()
 	e = router.NewRouter(e, r.NewAppController())
