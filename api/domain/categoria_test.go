@@ -7,7 +7,8 @@ import (
 )
 
 func TestNewCategoria(t *testing.T) {
-	categoria, err := domain.NewCategoria("categoria teste")
+	categoria, err := domain.NewCategoria()
+	require.NotNil(t, categoria.ID)
 	require.NotNil(t, categoria)
 	require.Nil(t, err)
 }

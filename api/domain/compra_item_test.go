@@ -9,7 +9,8 @@ import (
 
 func TestNewCompraItem(t *testing.T) {
 	compra, _ := domain.NewCompra(time.Now())
-	categoria, _ := domain.NewCategoria("categoria teste")
+	categoria, _ := domain.NewCategoria()
+	categoria.Nome = "categoria teste"
 
 	produto, err := domain.NewProduto(categoria, "produto", 10.50, "apenas para teste")
 

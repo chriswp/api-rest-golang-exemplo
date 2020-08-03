@@ -2,11 +2,12 @@ package controllers
 
 import (
 	"api/application/services"
+	"github.com/labstack/echo"
 	"net/http"
 )
 
 type ProdutoController interface {
-	All(c Context) error
+	All(c echo.Context) error
 }
 
 type produtoController struct {
@@ -17,7 +18,7 @@ func NewProdutoController(service services.ProdutoService) ProdutoController {
 	return &produtoController{service}
 }
 
-func (controller *produtoController) All(c Context) error {
+func (controller *produtoController) All(c echo.Context) error {
 	res, err := controller.service.GetAll()
 	if err != nil {
 		return err
@@ -26,7 +27,7 @@ func (controller *produtoController) All(c Context) error {
 	return c.JSON(http.StatusOK, res)
 }
 
-func (controller *produtoController) Show(c Context) error {
+func (controller *produtoController) Show(c echo.Context) error {
 	res, err := controller.service.GetAll()
 	if err != nil {
 		return err

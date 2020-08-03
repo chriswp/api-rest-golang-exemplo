@@ -17,7 +17,7 @@ func TestVendaRepositoryDbInsert(t *testing.T) {
 	venda, _ := domain.NewVenda(cliente, time.Now(), "")
 	repo := repositories.NewVendaRepository(db)
 
-	categoria, _ := domain.NewCategoria("categoria 1")
+	categoria, _ := domain.NewCategoria()
 	produto, _ := domain.NewProduto(categoria, "produto 1", 100.00, "apenas para efeito de teste")
 	produto2, _ := domain.NewProduto(categoria, "produto 1", 100.00, "apenas para efeito de teste")
 

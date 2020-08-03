@@ -3,5 +3,6 @@ package presenters
 import "api/domain"
 
 type CategoriaPresenter interface {
-	Response(categorias []*domain.Categoria) []*domain.Categoria
+	ResponseAll(categorias []*domain.Categoria) []*domain.Categoria
+	Response(categoria *domain.Categoria) *domain.Categoria
 }

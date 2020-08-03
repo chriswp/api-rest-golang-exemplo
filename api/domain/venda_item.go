@@ -9,9 +9,9 @@ import (
 type VendaItem struct {
 	ID              string    `json:"id" valid:"uuid" gorm:"type:uuid;primary_key"`
 	Produto         *Produto  `json:"produto" valid:"required"`
-	ProdutoID       string    `json:"-" valid:"-"`
+	ProdutoID       string    `json:"-" valid:"-" gorm:"column:produto_id;type:uuid;notnull"`
 	Venda           *Venda    `json:"venda" valid:"required"`
-	VendaID         string    `json:"-"  valid:"-"`
+	VendaID         string    `json:"-"  valid:"-"  gorm:"column:venda_id;type:uuid;notnull"`
 	Quantidade      int       `valid:"notnull"`
 	DataCriacao     time.Time `json:"data_criacao" valid:"-"`
 	DataModificacao time.Time `json:"data_modificacao" valid:"-"`

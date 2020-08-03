@@ -28,7 +28,7 @@ func NewDb() *gorm.DB {
 	dbInstance.Dsn = "dbname=apigo sslmode=disable user=root password=root host=db_goapi"
 	dbInstance.DbType = "postgres"
 	dbInstance.Debug = false
-	dbInstance.AutoMigrateDb = false
+	dbInstance.AutoMigrateDb = true
 	dbInstance.Env = "dev"
 
 	connection, err := dbInstance.Connect()

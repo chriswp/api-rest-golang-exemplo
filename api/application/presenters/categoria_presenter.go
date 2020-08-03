@@ -3,7 +3,8 @@ package presenters
 import "api/domain"
 
 type CategoriaPresenter interface {
-	Response(categorias []*domain.Categoria) []*domain.Categoria
+	ResponseAll(categorias []*domain.Categoria) []*domain.Categoria
+	Response(categoria *domain.Categoria) *domain.Categoria
 }
 
 type categoriaPresenter struct {
@@ -13,10 +14,10 @@ func NewCategoriaPresenter() CategoriaPresenter {
 	return &categoriaPresenter{}
 }
 
-func (cp categoriaPresenter) Response(categorias []*domain.Categoria) []*domain.Categoria {
-	for _, c := range categorias {
-		c.ID = c.ID
-		c.Nome = c.Nome
-	}
+func (cp categoriaPresenter) ResponseAll(categorias []*domain.Categoria) []*domain.Categoria {
 	return categorias
+}
+
+func (cp categoriaPresenter) Response(categoria *domain.Categoria) *domain.Categoria {
+	return categoria
 }

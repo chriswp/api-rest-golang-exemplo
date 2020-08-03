@@ -7,9 +7,10 @@ import (
 )
 
 type CategoriaRepository interface {
-	Insert(categoria *domain.Categoria) (*domain.Categoria, error)
 	Find(id string) (*domain.Categoria, error)
-	All() ([]*domain.Categoria, error)
+	Insert(categoria *domain.Categoria) (*domain.Categoria, error)
+	All(categorias []*domain.Categoria) ([]*domain.Categoria, error)
+	Update(categoria *domain.Categoria, id string) (*domain.Categoria, error)
 }
 
 type categoriaRepository struct {
@@ -40,8 +41,7 @@ func (repo categoriaRepository) Find(id string) (*domain.Categoria, error) {
 	return &categoria, nil
 }
 
-func (repo categoriaRepository) All() ([]*domain.Categoria, error) {
-	var categorias []*domain.Categoria
+func (repo categoriaRepository) All(categorias []*domain.Categoria) ([]*domain.Categoria, error) {
 	err := repo.Db.Find(&categorias).Error
 
 	if err != nil {
@@ -49,4 +49,22 @@ func (repo categoriaRepository) All() ([]*domain.Categoria, error) {
 	}
 
 	return categorias, nil
+}
+
+func (repo categoriaRepository) Update(categoria *domain.Categoria, id string) (*domain.Categoria, error) {
+	dadosCategoria := domain.Categoria{}
+	err := repo.Db.First(&dadosCategoria, "id = ?", id).Error
+	if err != nil {
+		return nil, err
+	}
+
+	err = repo.Db.Model(&dadosCategoria).Updates(map[string]interface{}{
+		"Nome":  categoria.Nome,
+		"Ativo": categoria.Ativo,
+	}).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &dadosCategoria, nil
 }

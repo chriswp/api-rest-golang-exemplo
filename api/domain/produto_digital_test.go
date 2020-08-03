@@ -7,7 +7,8 @@ import (
 )
 
 func TestNewProdutoDigital(t *testing.T) {
-	categoria, _ := domain.NewCategoria("categoria teste")
+	categoria, _ := domain.NewCategoria()
+	categoria.Nome = "categoria teste"
 	produto, _ := domain.NewProduto(categoria, "produto", 10.50, "apenas para teste")
 
 	pDigital, err := domain.NewProdutoDigital(produto, "http://link.exemplo.com")

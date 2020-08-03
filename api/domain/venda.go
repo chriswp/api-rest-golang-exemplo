@@ -10,7 +10,7 @@ type Venda struct {
 	ID              string      `json:"id" valid:"uuid" gorm:"type:uuid;primary_key"`
 	DataVenda       time.Time   `json:"data_venda" valid:"-"`
 	Cliente         *Cliente    `json:"cliente" valid:"required"`
-	ClienteID       string      `valid:"-"`
+	ClienteID       string      `valid:"-" gorm:"column:cliente_id;type:uuid;notnull"`
 	Itens           []VendaItem `json:"venda_item" valid:"-"`
 	Total           float64     `valid:"-"`
 	Subtotal        float64     `valid:"-"`

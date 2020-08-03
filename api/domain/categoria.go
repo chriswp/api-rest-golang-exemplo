@@ -15,14 +15,22 @@ type Categoria struct {
 	Produtos        []*Produto `json:"produtos" valid:"-" gorm:"ForeignKey:CategoriaID"`
 }
 
-func init() {
-	govalidator.SetFieldsRequiredByDefault(true)
+func (Categoria) TableName() string {
+	return "categorias"
 }
 
-func NewCategoria(nome string) (*Categoria, error) {
-	categoria := Categoria{
-		Nome: nome,
-	}
+func (categoria *Categoria) BeforeCreate() (err error) {
+	categoria.prepare()
+	return
+}
+
+func (categoria *Categoria) BeforeSave() (err error) {
+	categoria.DataModificacao = time.Now()
+	return
+}
+
+func NewCategoria() (*Categoria, error) {
+	categoria := Categoria{}
 	categoria.prepare()
 
 	err := categoria.Validate()

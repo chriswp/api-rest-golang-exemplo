@@ -16,7 +16,8 @@ func TestNewCompra(t *testing.T) {
 func TestCompra_AddNewItem(t *testing.T) {
 	compra, err := domain.NewCompra(time.Now())
 
-	categoria, _ := domain.NewCategoria("categoria teste")
+	categoria, _ := domain.NewCategoria()
+	categoria.Nome = "categoria teste"
 	produto, _ := domain.NewProduto(categoria, "produto", 10.50, "apenas para teste")
 
 	compra.AddNewItem(produto, 2)

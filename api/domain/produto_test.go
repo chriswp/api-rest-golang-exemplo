@@ -7,7 +7,8 @@ import (
 )
 
 func TestNewProduto(t *testing.T) {
-	categoria, _ := domain.NewCategoria("categoria")
+	categoria, _ := domain.NewCategoria()
+	categoria.Nome = "categoria teste"
 
 	produto, err := domain.NewProduto(categoria, "produto", 10, "apenas para teste")
 	require.NotNil(t, produto)
@@ -15,7 +16,8 @@ func TestNewProduto(t *testing.T) {
 }
 
 func TestNewProdutoFieldsEmpty(t *testing.T) {
-	categoria, _ := domain.NewCategoria("categoria")
+	categoria, _ := domain.NewCategoria()
+	categoria.Nome = "categoria teste"
 
 	_, err := domain.NewProduto(categoria, "", 10.52, "")
 	require.Error(t, err)
